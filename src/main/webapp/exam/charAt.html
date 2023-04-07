@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CharAt</title>
+	<script type="text/javascript">
+		charat = function(){
+			var str = document.fm.str.value;
+			var position = parseInt(document.fm.pos.value);
+			
+			var result = str.charAt(position-1);
+			alert(result);
+		}
+	</script>
+</head>
+<body>
+	<form name="fm">
+		<input name="str" type="text"/>
+		<input name="pos" type="text"/>
+		<input type="submit" value="実行" onclick="charat()"/>
+	</form>
+</body>
+</html>

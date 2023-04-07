@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello</title>
+</head>
+<body>
+
+<form name="fm" id="fm">
+	
+</form>
+<p><input type="button" value="テキストボックス追加" onclick="addTextBox()"></p>
+
+
+<script type="text/javascript">
+function addTextBox(){
+	var pTag = document.createElement("p");
+	var inputTag = document.createElement("input");
+	inputTag.setAttribute("type", "text");
+	inputTag.setAttribute("name", "word");
+	pTag.appendChild(inputTag);
+	var formTag = document.getElementById("fm");
+	formTag.appendChild(pTag);
+}
+</script>
+
+</body>
+</html>
