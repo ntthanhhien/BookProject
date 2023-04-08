@@ -31,6 +31,9 @@ public class BookForm {
 
 	@NotNull
 	private String categoryName;
+	
+	private String publisherId;
+	private String categoryId;
 
 	@NotNull
 	private Integer pageCount;

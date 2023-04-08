@@ -33,8 +33,6 @@ public class BookController {
 	private BookMapper bookMapper;
 	@Autowired
 	private BookCustomMapper bookCustomMapper;
-	//	@Autowired
-	//	private OrderHeaderMapper orderHeaderMapper;
 	@Autowired
 	private PublisherMapper publisherMapper;
 	@Autowired
@@ -48,18 +46,16 @@ public class BookController {
 	}
 
 	@RequestMapping("show")
-	public String showBookDetail(@RequestParam String bookId, BookForm bookForm, Model model) {
-		Book book = bookMapper.selectByPrimaryKey(bookId);
-		bookForm.setBookId(book.getBookId());
-		bookForm.setBookName(book.getBookName());
-		bookForm.setPrice(book.getPrice());
-		bookForm.setDiscount(book.getDiscount());
-		bookForm.setPageCount(book.getPageCount());
-		bookForm.setIsbn13(book.getIsbn13());
-		bookForm.setOnSaleDate(book.getOnSaleDate());
-		bookForm.setPublisherName(book.getPublisherName());
-		bookForm.setCategoryName(book.getCategoryName());
-		return "book/show";
+	public String showBookDetail(@RequestParam String bookId, Model model) {
+	    Book book = bookMapper.selectByPrimaryKey(bookId);
+	    Category category = categoryMapper.selectByPrimaryKey(book.getCategoryId());
+	    Publisher publisher = publisherMapper.selectByPrimaryKey(book.getPublisherId());
+
+	    model.addAttribute("categoryName", category.getCategoryName());
+	    model.addAttribute("publisherName", publisher.getPublisherName());
+	    model.addAttribute("book", book);
+
+	    return "book/show";
 	}
 
 	//	//入力画面 book/search ・ jsp: book/searchInput
@@ -84,7 +80,7 @@ public class BookController {
 	////		bookExample.createCriteria().andPriceBetween(1000, 2000);
 
 	@RequestMapping("input")
-	public String input(Integer publisherId, Integer categoryId, BookForm bookForm, Model model) {
+	public String input(BookForm bookForm, Model model) {
 
 		CategoryExample categoryExample = new CategoryExample();
 		categoryExample.setOrderByClause("category_Id");
@@ -101,14 +97,10 @@ public class BookController {
 
 	@RequestMapping("inputConfirm")
 	public String inputConfirm(BookForm bookForm, Model model) {
-		if (bookForm.getCategoryName() != null) {
-			Publisher category = publisherMapper.selectByPrimaryKey(bookForm.getCategoryName());
-			model.addAttribute("category", category);
-		}
-		if (bookForm.getPublisherName() != null) {
-			Publisher publisher = publisherMapper.selectByPrimaryKey(bookForm.getPublisherName());
-			model.addAttribute("publisher", publisher);
-		}
+		Category category = categoryMapper.selectByPrimaryKey(bookForm.getCategoryId());
+		model.addAttribute("categoryName", category.getCategoryName());
+		Publisher publisher = publisherMapper.selectByPrimaryKey(bookForm.getPublisherId());
+		model.addAttribute("publisherName", publisher.getPublisherName());
 		return "book/inputConfirm";
 	}
 
@@ -122,8 +114,9 @@ public class BookController {
 		book.setPageCount(bookForm.getPageCount());
 		book.setIsbn13(bookForm.getIsbn13());
 		book.setOnSaleDate(bookForm.getOnSaleDate());
-		book.setPublisherName(bookForm.getPublisherName());
-		book.setCategoryName(bookForm.getCategoryName());
+		
+		book.setPublisherId(bookForm.getPublisherId());
+		book.setCategoryId(bookForm.getCategoryId());
 		bookMapper.insert(book);
 		return "redirect:/book/list";
 	}
@@ -145,6 +138,10 @@ public class BookController {
 		bookForm.setPageCount(book.getPageCount());
 		bookForm.setIsbn13(book.getIsbn13());
 		bookForm.setOnSaleDate(book.getOnSaleDate());
+		bookForm.setIsbn13(book.getIsbn13());
+		bookForm.setCategoryId(book.getCategoryId());
+		bookForm.setPublisherId(book.getPublisherId());
+
 		CategoryExample categoryExample = new CategoryExample();
 		categoryExample.setOrderByClause("category_Id");
 		List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
@@ -158,40 +155,47 @@ public class BookController {
 	}
 
 	@RequestMapping("editConfirm")
-	public String editConfirm(BookForm bookForm, Model model) {
-		if (bookForm.getPublisherName() != null) {
-			Publisher publisher = publisherMapper.selectByPrimaryKey(bookForm.getPublisherName());
-			model.addAttribute("publisher", publisher);
-		}
-
+	public String editConfirm (BookForm bookForm,Model model) {
+		Category category = categoryMapper.selectByPrimaryKey(bookForm.getCategoryId());
+		model.addAttribute("categoryName", category.getCategoryName());
+		Publisher publisher = publisherMapper.selectByPrimaryKey(bookForm.getPublisherId());
+		model.addAttribute("publisherName", publisher.getPublisherName());
 		return "book/editConfirm";
-	}
+}
 
 	@RequestMapping("editExecute")
 	public String editExecute(BookForm bookForm, Model model) {
 		Book book = new Book();
-		bookForm.setBookId(book.getBookId());
-		bookForm.setBookName(book.getBookName());
-		bookForm.setPrice(book.getPrice());
-		bookForm.setDiscount(book.getDiscount());
-		bookForm.setPageCount(book.getPageCount());
-		bookForm.setIsbn13(book.getIsbn13());
-		bookForm.setOnSaleDate(book.getOnSaleDate());
+		book.setBookId(bookForm.getBookId());
+		book.setBookName(bookForm.getBookName());
+		book.setDiscount(bookForm.getDiscount());
+		book.setIsbn13(bookForm.getIsbn13());
+		book.setOnSaleDate(bookForm.getOnSaleDate());
+		book.setPageCount(bookForm.getPageCount());
+		book.setPrice(bookForm.getPrice());
+		book.setCategoryId(bookForm.getCategoryId());
+		book.setPublisherId(bookForm.getPublisherId());
 		bookMapper.updateByPrimaryKey(book);
 
 		return "redirect:./list";
 	}
 
 	@RequestMapping("delete")
-	public String delete(BookForm bookForm, Model model) {
-		Book book = bookMapper.selectByPrimaryKey(bookForm.getBookId());
-		model.addAttribute("bookForm", book);
+	public String delete(@RequestParam String bookId, Model model) {
+		Book book = bookMapper.selectByPrimaryKey(bookId);
+	    Category category = categoryMapper.selectByPrimaryKey(book.getCategoryId());
+	    Publisher publisher = publisherMapper.selectByPrimaryKey(book.getPublisherId());
+
+	    model.addAttribute("categoryName", category.getCategoryName());
+	    model.addAttribute("publisherName", publisher.getPublisherName());
+	    model.addAttribute("book", book);
 		return "book/delete";
 	}
+		
 
 	@RequestMapping("deleteExecute")
-	public String deleteExecute(BookForm bookForm, Model model) {
-		bookMapper.deleteByPrimaryKey(bookForm.getBookId());
+	public String deleteExecute (@RequestParam String bookId) {	
+		bookMapper.deleteByPrimaryKey(bookId);
 		return "redirect:./list";
 	}
 }

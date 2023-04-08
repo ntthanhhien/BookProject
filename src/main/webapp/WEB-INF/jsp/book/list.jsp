@@ -8,15 +8,16 @@
 <meta charset="UTF-8">
 <title>書籍一覧</title>
 <link rel="stylesheet" href="/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 </head>
 <body>
+	<div class="container">
 	<p>書籍一覧</p>
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<h1>検索結果</h1>
-		<table border="1" class="table table-striped" id="books-table">
+		<table class="table table-striped" id="books-table">
 			<thead>
 				<tr>
 					<th>書籍ID</th>
@@ -28,10 +29,11 @@
 					<th>ページ数</th>
 					<th>ISBN番号</th>
 					<th>発売日</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${books}" var="book" begin="0" end="2">
+				<c:forEach items="${books}" var="book">
 					<tr>
 						<td><c:out value="${book.bookId}" /></td>
 						<td><c:out value="${book.bookName}" /></td>
@@ -42,54 +44,36 @@
 						<td><c:out value="${book.pageCount}" /></td>
 						<td><c:out value="${book.isbn13}" /></td>
 						<td><c:out value="${book.onSaleDate}" /></td>
-						<td><div class="btn-group" role="group">
-								<a href="show?bookId=${book.bookId}" class="btn btn-primary">詳細</a> 
-									<a href="edit?bookId=${book.bookId}" class="btn btn-success">編集</a>
-								<a href="delete?bookId=${book.bookId}" class="btn btn-danger">削除</a></td>
-						</div>
+						<td>
+							<a href="show?bookId=${book.bookId}" class="btn btn-primary">詳細</a> 
+							<a href="edit?bookId=${book.bookId}" class="btn btn-success">編集</a>
+							<a href="delete?bookId=${book.bookId}" class="btn btn-danger">削除</a>
+						</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="row">
-
-			<div class="col-sm-12 col-md-7">
-				<div class="dataTables_paginate paging_simple_numbers">
-					<ul class="pagination">
-						<li class="paginate_button page-item previous"
-							id="books-table_previous"><a href="#"
-							aria-controls="books-table" data-dt-idx="0" tabindex="0"
-							class="page-link">前</a></li>
-						<li class="paginate_button page-item active"><a href="#"
-							aria-controls="books-table" data-dt-idx="1" tabindex="0"
-							class="page-link">1</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="books-table" data-dt-idx="2" tabindex="0"
-							class="page-link">2</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="books-table" data-dt-idx="3" tabindex="0"
-							class="page-link">3</a></li>
-						<li class="paginate_button page-item next" id="books-table_next">
-							<a href="#" aria-controls="books-table" data-dt-idx="4"
-							tabindex="0" class="page-link">次</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
+		
 		<a href="http://localhost:8080/book/input" class="btn btn-primary">新規登録</a>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-	<script>
-	$('#books-table').DataTable({
-		   "pagingType": "simple_numbers",
-		   "pageLength": 3,
-		});
 	
+	</div>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#books-table').DataTable({
+				language:{
+					"info": " _TOTAL_ 件中 _START_ から _END_ まで表示",
+				    "paginate": {
+				        "first": "先頭",
+				        "last": "最終",
+				        "next": "次",
+				        "previous": "前"
+				    },
+				}
+			});
+		});
 	</script>
 
 </body>

@@ -21,53 +21,57 @@
 				<form:errors path="bookId" element="p" cssClass="text-danger"></form:errors>
 			</div>
 			<div class="form-group">
-				<label for="bookId">書籍名</label>
+				<label for="bookName">書籍名</label>
 				<form:input path="bookName" cssClass="form-control" />
 				<form:errors path="bookName" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<label for="bookId">価額</label>
+				<label for="price">価格</label>
 				<form:input path="price" cssClass="form-control" />
 				<form:errors path="price" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<label for="bookId">値引き金額</label>
+				<label for="discount">値引き金額</label>
 				<form:input path="discount" cssClass="form-control" />
 				<form:errors path="discount" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<label>カテゴリ</label>
-				<form:select path="categoryName" cssClass="form-control">
-					<form:option value="なし" />
-					<form:options items="${categoryList}" itemValue="categoryName"
-						itemLabel="categoryName" />
+				<label> カテゴリ </label>
+				<form:select path ="categoryId" cssClass="form-control">
+				<form:option value = "" label ="選択してください"/>
+				<form:options items = "${categoryList}" itemValue = "categoryId" itemLabel = "categoryName"/>				
 				</form:select>
 			</div>
 			<div class="form-group">
-				<label>出版社</label>
-				<form:select path="publisherName" cssClass="form-control">
-					<form:option value="なし" />
-					<form:options items="${publisherList}" itemValue="publisherName"
-						itemLabel="publisherName" />
+				<label> 出版社 </label>
+				<form:select path ="publisherId" cssClass="form-control">
+				<form:option value = "" label ="選択してください"/>
+				<form:options items = "${publisherList}" itemValue = "publisherId" itemLabel = "publisherName"/>				
 				</form:select>
 			</div>
 			<div class="form-group">
-				<label for="bookId">ページ数</label>
+				<label for="pageCount">ページ数</label>
 				<form:input path="pageCount" cssClass="form-control" />
 				<form:errors path="pageCount" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<label for="bookId">ISBN番号</label>
+				<label for="isbn13">ISBN番号</label>
 				<form:input path="isbn13" cssClass="form-control" />
 				<form:errors path="isbn13" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<label for="bookId">発売日</label>
+				<label for="onSaleDate">発売日</label>
 				<form:input path="onSaleDate" cssClass="form-control" />
 				<form:errors path="onSaleDate" element="p" cssClass="text-danger"></form:errors>
+
 			</div>
 			<div class="form-group">
-				<input type="submit" value="更新" />
+				<input class = "btn btn-primary" type="submit" value="更新" />
 			</div>
 		</form:form>
 	</div>

@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="/bootstrap.min.css">
 </head>
 <body>
+<div class="container">
+		<div class="col-md-6 col-md-offset-3">
 	<h1>書籍入力確認画面</h1>
 	<div class="col-md-12">
 		<div class="form-group">
@@ -33,11 +35,11 @@
 		</div>
 		<div class="form-group">
 			<label for="categoryName">カテゴリ</label> <span><c:out
-					value="${bookForm.categoryName}" /></span>
+					value="${categoryName}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="publisherName">出版社</label> <span><c:out
-					value="${bookForm.publisherName}" /></span>
+					value="${publisherName}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="pageCount">ページ数</label> <span><c:out
@@ -52,21 +54,20 @@
 					value="${bookForm.onSaleDate}" /></span>
 		</div>
 	</div>
-	<form:form modelAttribute="bookForm" action="input">
+	<form:form modelAttribute="bookForm">
 		<form:hidden path="bookId" />
 		<form:hidden path="bookName" />
 		<form:hidden path="price" />
 		<form:hidden path="discount" />
-		<form:hidden path="categoryName"/>
-		<form:hidden path="publisherName" />
+		<form:hidden path="categoryId"/>
+		<form:hidden path="publisherId" />
 		<form:hidden path="pageCount" />
 		<form:hidden path="isbn13" />
 		<form:hidden path="onSaleDate" />
-		<input type="submit" class="btn btn-primary" value="登録確認"
-			formaction="inputExecute" />
+		<input type="submit" class="btn btn-primary" value="登録確認" formaction="inputExecute" />
 		<input type="submit" value="戻る" formaction="input" />
 	</form:form>
-
+</div>
 	</div>
 </body>
 </html>

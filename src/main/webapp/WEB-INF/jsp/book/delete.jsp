@@ -16,56 +16,50 @@
 	<div class="col-md-12">
 		<div class="form-group">
 			<label for="bookId">書籍ID</label> <span><c:out
-					value="${bookForm.bookId}" /></span>
+					value="${book.bookId}" /></span>
+
 		</div>
 		<div class="form-group">
 			<label for="bookName">書籍名</label> <span><c:out
-					value="${bookForm.bookName}" /></span>
+					value="${book.bookName}" /></span>
 		</div>
-
 		<div class="form-group">
-			<label for="price">価額</label> <span><c:out
-					value="${bookForm.price}" /></span>
+			<label for="price">価格</label> <span><c:out
+					value="${book.price}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="discount">値引き金額</label> <span><c:out
-					value="${bookForm.discount}" /></span>
+					value="${book.discount}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="categoryName">カテゴリ</label> <span><c:out
-					value="${bookForm.categoryName}" /></span>
+					value="${categoryName}" /></span>
 		</div>
 		<div class="form-group">
-			<label for="publisherName">出版社</label> <span><c:out
-					value="${bookForm.publisherName}" /></span>
+			<label for="publisherName">出版社名</label> <span><c:out
+					value="${publisherName}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="pageCount">ページ数</label> <span><c:out
-					value="${bookForm.pageCount}" /></span>
+					value="${book.pageCount}" /></span>
 		</div>
 		<div class="form-group">
 			<label for="isbn13">ISBN番号</label> <span><c:out
-					value="${bookForm.isbn13}" /></span>
+					value="${book.isbn13}" /></span>
 		</div>
 		<div class="form-group">
-			<label for="onSaleDate">発売日</label> <span><c:out
-					value="${bookForm.onSaleDate}" /></span>
+			<label for="onSaleDate">発売日</label> <span> <fmt:formatDate
+					pattern="yyyy年MM月dd日" value="${book.onSaleDate}" /></span>
 		</div>
-	</div>
-	<form:form modelAttribute="bookForm" action="input">
-		<form:hidden path="bookId" />
-		<form:hidden path="bookName" />
-		<form:hidden path="price" />
-		<form:hidden path="discount" />
-		<form:hidden path="categoryName"/>
-		<form:hidden path="publisherName" />
-		<form:hidden path="pageCount" />
-		<form:hidden path="isbn13" />
-		<form:hidden path="onSaleDate" />
-		<input type="submit" class="btn btn-primary" value="削除確認"
-			formaction="deleteExecute" />
-		<input type="submit" value="戻る" formaction="list" />
-	</form:form>
+
+		<form action="deleteExecute">
+			<input value="${book.bookId}" name="bookId" type="hidden" /> <input
+				class="btn btn-secondary" type="submit" value="削除確認" />
+		</form>
+
+		<form action="list">
+			<input class="btn btn-primary" type="submit" value="戻る" />
+		</form>
 
 	</div>
 </body>
